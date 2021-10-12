@@ -33,6 +33,10 @@ export async function addCigarette(user_id: number): Promise<boolean> {
   }
 }
 
+export async function addUser(user_id: number): Promise<void> {
+  await db.query('INSERT INTO users VALUES ($1) ON CONFLICT DO NOTHING', [user_id])
+}
+
 async function getTotal(user_id: number): Promise<number> {
   const query = 'SELECT COUNT(smoke_date) AS total ' +
     'FROM smoked ' +

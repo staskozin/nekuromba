@@ -1,9 +1,10 @@
 import TelegramBot from 'node-telegram-bot-api'
-import { getStat, addCigarette } from './nekuromba'
+import { getStat, addCigarette, addUser } from './nekuromba'
 
 const bot = new TelegramBot(process.env.TELEGRAM_API_KEY)
 
 bot.onText(/\/start/, async (msg: TelegramBot.Message) => {
+  await addUser(msg.from!.id)
   bot.sendMessage(msg.chat.id, await generateMessage(msg.from!.id), {
     reply_markup: generateReplyMarkup(),
     parse_mode: 'HTML'
